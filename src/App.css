@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+@font-face {
+  font-family: "omyu_pretty";
+  src: url("./assets/fonts/omyu_pretty.woff") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
