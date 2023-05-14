@@ -1,6 +1,6 @@
 import React from "react";
-import * as Page from "../styles/Page";
-import "../styles/Common.css"
+import * as Page from "../../styles/Page";
+import "../../styles/Common.css"
 export default function MainPage() {
   return (
     <React.Fragment>

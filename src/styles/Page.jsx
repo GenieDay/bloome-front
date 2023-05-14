@@ -14,13 +14,13 @@ export const Background = styled.div`
 
 
 export const PageBound = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  padding-top: 120px;
-  padding-bottom: 120px;
+  // padding-top: 120px;
+  // padding-bottom: 120px;
 `;
 
 export const PageBottom = styled.div`
@@ -31,6 +31,21 @@ export const PageBottom = styled.div`
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
+`;
+
+export const RoundedBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  height: 300px;
+  width: 400px;
+  max-width: 80%;
+  max-height: 40%;
+  border-radius: 15px;
+  margin-top: 40px;
+  padding: 0px;
 `;
 
 export const MenuButton = styled.button`
