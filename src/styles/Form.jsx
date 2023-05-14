@@ -29,17 +29,41 @@ export const SubmitButton = styled.button`
   margin-top: 20px;
   height: 40px;
   width: 60%;
+
   border-radius: 20px;
   border: 0px;
+
+  font-size: 1rem;
   white-space: nowrap;
-  background-color: #79bae8;
-  font-size: 15px;
   color: #ffffff;
+  
   cursor: pointer;
+
+  background-color: #79bae8;
   &:hover {
     background: #b8daf2;
   }
   &:active {
     background: #b8daf2;
+  }
+`;
+
+export const WhiteMenuButton = styled.button`
+  border: none;
+  border-radius: 20px;
+  color: black;
+  cursor: pointer;
+  margin-top: 7px;
+  margin-bottom: 7px;
+
+  height: 2.25rem;
+  font-size: 1rem;
+
+  background: white;
+  &:hover {
+    background: #d8eef8;
+  }
+  &:active {
+    background: #d8eef8;
   }
 `;

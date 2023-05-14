@@ -4,6 +4,9 @@ import background from "../assets/images/bloome-background.png";
 export const Background = styled.div`
   background-image: url(${background});
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0px;
   width: 100vw;
   height: 100%;
@@ -12,6 +15,10 @@ export const Background = styled.div`
   background-repeat: no-repeat;
 `;
 
+export const TitleBound = styled.div`
+  position: absolute;
+  top: 15%;
+`;
 
 export const PageBound = styled.div`
   height: 100%;
@@ -19,8 +26,6 @@ export const PageBound = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // padding-top: 120px;
-  // padding-bottom: 120px;
 `;
 
 export const PageBottom = styled.div`
