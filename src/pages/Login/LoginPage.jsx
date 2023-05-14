@@ -9,7 +9,7 @@ export default function LoginPage() {
       <Page.Background>
         <Page.PageBound>
           <div className="content-title">로그인</div>
-          <Page.RoundedBox>
+          <Page.RoundedBox style={{ height: "250px" }}>
             <Form.InputBound>
               <Form.InputTitle>아이디</Form.InputTitle>
               <Form.InputBox type="text"></Form.InputBox>

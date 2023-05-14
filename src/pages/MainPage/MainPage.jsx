@@ -11,6 +11,10 @@ export default function MainPage() {
     navigate("/login");
   };
 
+  const navigateToRegister = () => {
+    navigate("/register");
+  }
+
   return (
     <React.Fragment>
       <Page.Background>
@@ -27,6 +31,7 @@ export default function MainPage() {
           </Form.WhiteMenuButton>
           <Form.WhiteMenuButton
             style={{ paddingLeft: "3rem", paddingRight: "3rem" }}
+            onClick={navigateToRegister}
           >
             내 정원 개설하기
           </Form.WhiteMenuButton>

@@ -7,9 +7,10 @@ export const Background = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin: 0px;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -44,10 +45,9 @@ export const RoundedBox = styled.div`
   align-items: center;
   justify-content: center;
   background: white;
-  height: 300px;
   width: 400px;
   max-width: 80%;
-  max-height: 40%;
+  max-height: 60%;
   border-radius: 15px;
   margin-top: 40px;
   padding: 0px;
