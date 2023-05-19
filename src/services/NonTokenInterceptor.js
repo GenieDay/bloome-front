@@ -7,8 +7,10 @@ const NonTokenInterceptor = axios.create({
 
 // request interceptors
 NonTokenInterceptor.interceptors.request.use(
+
   function (config) {
     return config;
+    
   },
   function (error) {
     return Promise.reject(error);
@@ -20,24 +22,24 @@ NonTokenInterceptor.interceptors.response.use(
     return response;
   },
   function (error) {
-    const status = error.response.status;
+    // const status = error.response.status;
 
-    switch (status) {
+    // switch (status) {
 
-      case 401: {
-        window.location.href = '/';
-        return Promise.reject(error.message);
-      }
+    //   case 401: {
+    //     window.location.href = '/';
+    //     return Promise.reject(error.message);
+    //   }
 
-      case 403: {
-        window.location.href = "/";
-        return Promise.reject(error.message);
-      }
+    //   case 403: {
+    //     window.location.href = "/";
+    //     return Promise.reject(error.message);
+    //   }
 
-      default : {
-        return Promise.reject(error.message);
-      }
-    }
+    //   default : {
+    //     return Promise.reject(error.message);
+    //   }
+    // }
   }
 );
 

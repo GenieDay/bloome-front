@@ -109,3 +109,17 @@ export const MailTipLi = styled.li`
   list-style: none;
   padding-left: 5px;
 `;
+
+export const SubTextBlack = styled.p`
+  margin: 5px 0 0 10px;
+`;
+
+export const SubTextRed = styled.p`
+  margin: 5px 0 0 10px;
+  color: red;
+`;
+
+export const SubTextGreen = styled.p`
+  margin: 5px 0 0 10px;
+  color: green;
+`;
