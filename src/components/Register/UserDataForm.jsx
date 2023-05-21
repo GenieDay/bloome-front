@@ -87,40 +87,41 @@ export default function UserDataForm(props) {
 
   // 등록 전 최종 점검 (빈 값 확인 및 이메일 유효성 확인)
   const checkRegister = () => {
-    let checkNickName, checkPassword, checkEmail;
+    props.moveNextPage();
+    // let checkNickName, checkPassword, checkEmail;
 
-    checkNickName = checkIsNull(nickname);
-    checkPassword = checkIsNull(password);
-    checkEmail = checkIsNull(email) === 1 ? checkEmailValid(email) : -2;
+    // checkNickName = checkIsNull(nickname);
+    // checkPassword = checkIsNull(password);
+    // checkEmail = checkIsNull(email) === 1 ? checkEmailValid(email) : -2;
 
-    setNicknameValid(checkNickName);
-    setPasswordValid(checkPassword);
-    setEmailValid(checkEmail);
+    // setNicknameValid(checkNickName);
+    // setPasswordValid(checkPassword);
+    // setEmailValid(checkEmail);
 
-    // 빈 값 또는 유효하지 않은 값 있는 경우, 더 이상 진행하지 않음
-    if (
-      checkNickName < 0 ||
-      checkPassword < 0 ||
-      checkEmail < 0
-    ) {
-      return;
-    }
+    // // 빈 값 또는 유효하지 않은 값 있는 경우, 더 이상 진행하지 않음
+    // if (
+    //   checkNickName < 0 ||
+    //   checkPassword < 0 ||
+    //   checkEmail < 0
+    // ) {
+    //   return;
+    // }
 
-    // 회원가입 api call
-    join(nickname, id, password, email)
-      .then((response) => {
-        if (response.status === 200) {
-          props.setNickname(nickname);
-          props.setId(id);
-          props.setPassword(password);
-          props.setEmail(email);
-          props.moveNextPage();
-        }
-      })
-      .catch((error) => {
-        // error status 409인 경우 확인 필요
-        setIdValid(-1);
-      });
+    // // 회원가입 api call
+    // join(nickname, id, password, email)
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       props.setNickname(nickname);
+    //       props.setId(id);
+    //       props.setPassword(password);
+    //       props.setEmail(email);
+    //       props.moveNextPage();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     // error status 409인 경우 확인 필요
+    //     setIdValid(-1);
+    //   });
   };
 
   return (

@@ -123,3 +123,30 @@ export const SubTextGreen = styled.p`
   margin: 5px 0 0 10px;
   color: green;
 `;
+
+export const DisabledKeywordButton = styled.button`
+  padding: 5px 15px 5px 15px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #79bae8;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #000000;
+
+  cursor: pointer;
+
+  background-color: #ffffff;
+  &:hover {
+    background: #b8daf2;
+  }
+  &:active {
+    background: #b8daf2;
+  }
+`;
+
+export const KeywordBound = styled.div`
+  width: 85%;
+  height: 55%;
+  overflow: auto;
+`;
