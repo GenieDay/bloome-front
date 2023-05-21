@@ -6,9 +6,9 @@ import "../../styles/Common.css";
 
 // component
 import UserDataForm from "../../components/Register/UserDataForm";
+import KeywordForm from "../../components/Register/KeywordForm";
 
 export default function RegisterPage() {
-
   const [registerPageCnt, setRegisterPageCnt] = useState(0);
 
   const [nickname, setNickname] = useState("");
@@ -20,8 +20,13 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
 
   // 다음 가입 단계로 이동
-  function moveNextPage () {
+  function moveNextPage() {
     setRegisterPageCnt(registerPageCnt + 1);
+  }
+
+  // 최종 단계 완료 후, 내 정원으로 이동
+  function moveHomePage() {
+    console.log('내 정원으로 이동');
   }
 
   useEffect(() => {
@@ -37,13 +42,27 @@ export default function RegisterPage() {
       <Page.Background>
         <Page.PageBound>
           <div className={"content-title"}>내 정원 만들기</div>
-          <UserDataForm
-            moveNextPage={moveNextPage}
-            setNickname={setNickname}
-            setId={setId}
-            setPassword={setPassword}
-            setEmail={setEmail}
-          />
+          {registerPageCnt === 0 ? (
+            <UserDataForm
+              moveNextPage={moveNextPage}
+              setNickname={setNickname}
+              setId={setId}
+              setPassword={setPassword}
+              setEmail={setEmail}
+            />
+          ) : registerPageCnt === 1 ? (
+            <KeywordForm
+              moveNextPage={moveNextPage}
+              nickname={nickname}
+              guideText={"님에 가장 가깝게 느껴지는"}
+            />
+          ) : (
+            <KeywordForm
+              moveNextPage={moveHomePage}
+              nickname={nickname}
+              guideText={"님이 가지고 싶은 이미지에 대한"}
+            />
+          )}
         </Page.PageBound>
       </Page.Background>
     </React.Fragment>
