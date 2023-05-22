@@ -40,6 +40,7 @@ NonTokenInterceptor.interceptors.response.use(
     //     return Promise.reject(error.message);
     //   }
     // }
+    return Promise.reject(error);
   }
 );
 

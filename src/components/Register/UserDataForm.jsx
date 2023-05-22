@@ -6,6 +6,7 @@ import { checkDuplicateId, join } from "../../services/apis/user";
 
 export default function UserDataForm(props) {
   // --valid code--
+  // -3 : 예상치 못한 에러 상황
   // -2 : 미입력
   // -1 : 사용 불가 (유효하지 않음)
   // 0  : 초기
@@ -29,13 +30,21 @@ export default function UserDataForm(props) {
     if (targetValue.replace(/^\s+|\s+$/gm, "") !== "") {
       let data = await checkDuplicateId(targetValue)
         .then((response) => {
+          console.log(response);
           if (response.status === 200) {
+            console.log(response.status);
             return 1;
           }
         })
         .catch((error) => {
           // error status 409인 경우 확인 필요
-          return -1;
+          console.log(error.response.status);
+          if (error.response.status === 409) {
+            return -1;
+          }
+          else {
+            return -3;
+          }
         });
       return data;
     } else {
@@ -87,41 +96,48 @@ export default function UserDataForm(props) {
 
   // 등록 전 최종 점검 (빈 값 확인 및 이메일 유효성 확인)
   const checkRegister = () => {
-    props.moveNextPage();
-    // let checkNickName, checkPassword, checkEmail;
+    
+    let checkNickName, checkId, checkPassword, checkEmail;
 
-    // checkNickName = checkIsNull(nickname);
-    // checkPassword = checkIsNull(password);
-    // checkEmail = checkIsNull(email) === 1 ? checkEmailValid(email) : -2;
+    checkNickName = checkIsNull(nickname);
+    checkPassword = checkIsNull(password);
+    checkEmail = checkIsNull(email) === 1 ? checkEmailValid(email) : -2;
+    checkId = checkIsNull(id);
 
-    // setNicknameValid(checkNickName);
-    // setPasswordValid(checkPassword);
-    // setEmailValid(checkEmail);
+    setNicknameValid(checkNickName);
+    if (checkId === -2) setIdValid(checkId);
+    setPasswordValid(checkPassword);
+    setEmailValid(checkEmail);
 
-    // // 빈 값 또는 유효하지 않은 값 있는 경우, 더 이상 진행하지 않음
-    // if (
-    //   checkNickName < 0 ||
-    //   checkPassword < 0 ||
-    //   checkEmail < 0
-    // ) {
-    //   return;
-    // }
+    // 빈 값 또는 유효하지 않은 값 있는 경우, 더 이상 진행하지 않음
+    if (
+      checkNickName < 0 ||
+      checkPassword < 0 ||
+      checkIdValid < 0 ||
+      checkEmail < 0
+    ) {
+      return;
+    }
 
-    // // 회원가입 api call
-    // join(nickname, id, password, email)
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       props.setNickname(nickname);
-    //       props.setId(id);
-    //       props.setPassword(password);
-    //       props.setEmail(email);
-    //       props.moveNextPage();
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     // error status 409인 경우 확인 필요
-    //     setIdValid(-1);
-    //   });
+    // 회원가입 api call
+    join(nickname, id, password, email)
+      .then((response) => {
+        if (response.status === 200) {
+          props.setNickname(nickname);
+          props.setId(id);
+          props.setPassword(password);
+          props.setEmail(email);
+          props.moveNextPage();
+          return;
+        }
+      })
+      .catch((error) => {
+        // error status 409인 경우 확인 필요
+        if(error.response.status === 409) {
+          setIdValid(-1);
+          return;
+        }
+      });
   };
 
   return (
