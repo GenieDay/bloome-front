@@ -66,6 +66,21 @@ export const SubmitButton = styled.button`
   }
 `;
 
+export const DisabledSubmitButton = styled.button`
+  margin-top: 30px;
+  height: 40px;
+  width: 60%;
+
+  border-radius: 20px;
+  border: 0px;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #ffffff;
+
+  background-color: #aaaaaa;
+`;
+
 export const WhiteMenuButton = styled.button`
   border: none;
   border-radius: 20px;
@@ -122,6 +137,27 @@ export const SubTextRed = styled.p`
 export const SubTextGreen = styled.p`
   margin: 5px 0 0 10px;
   color: green;
+`;
+
+export const AbledKeywordButton = styled.button`
+  padding: 5px 15px 5px 15px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #79bae8;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  background-color: #79bae8;
+  &:hover {
+    background: #b8daf2;
+  }
+  &:active {
+    background: #b8daf2;
+  }
 `;
 
 export const DisabledKeywordButton = styled.button`

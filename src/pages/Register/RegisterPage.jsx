@@ -55,12 +55,14 @@ export default function RegisterPage() {
               moveNextPage={moveNextPage}
               nickname={nickname}
               guideText={"님에 가장 가깝게 느껴지는"}
+              submitButtonText={"다음"}
             />
           ) : (
             <KeywordForm
               moveNextPage={moveHomePage}
               nickname={nickname}
               guideText={"님이 가지고 싶은 이미지에 대한"}
+              submitButtonText={"정원 개설하기"}
             />
           )}
         </Page.PageBound>
