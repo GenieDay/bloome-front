@@ -5,6 +5,7 @@ import "../../styles/Common.css";
 import { Modal } from "react-bootstrap";
 
 import { login } from "../../services/apis/user";
+import { userInfo } from "../../reducer/user";
 
 export default function LoginPage() {
   const [id, setId] = useState("");
@@ -17,7 +18,8 @@ export default function LoginPage() {
     login(id, password)
       .then((response) => {
         if (response.status === 200) {
-          console.log("login");
+          userInfo(response.data.data);
+          console.log(JSON.parse(localStorage.getItem("userInfo")).accessToken);
           return;
         }
       })
