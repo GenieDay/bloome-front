@@ -2,9 +2,12 @@ import Interceptor from "../NonTokenInterceptor";
 
 export function login(id, password) {
   return Interceptor({
-    url: "/",
+    url: "/api/v1/user/login",
     method: "post",
-    data: { id, password },
+    data: {
+      idName: id,
+      password: password,
+    },
   });
 }
 
@@ -13,12 +16,12 @@ export function checkDuplicateId(id) {
     url: "/api/v1/user/join/id-check",
     method: "post",
     data: {
-      "idName": id,
+      idName: id,
     },
   });
 }
 
-export function join (name, idName, password, email) {
+export function join(name, idName, password, email) {
   return Interceptor({
     url: "/api/v1/user/join",
     method: "post",
@@ -26,7 +29,7 @@ export function join (name, idName, password, email) {
       name: name,
       idName: idName,
       email: email,
-      password: password
+      password: password,
     },
   });
 }
