@@ -7,7 +7,11 @@ import { Modal } from "react-bootstrap";
 import { login } from "../../services/apis/user";
 import { userInfo } from "../../reducer/user";
 
+import { useNavigate } from "react-router-dom";
+
 export default function LoginPage() {
+  const navigate = useNavigate();
+
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [modalShow, setModalShow] = useState(false);
@@ -19,7 +23,7 @@ export default function LoginPage() {
       .then((response) => {
         if (response.status === 200) {
           userInfo(response.data.data);
-          console.log(JSON.parse(localStorage.getItem("userInfo")).accessToken);
+          navigate("/garden/"+id);
           return;
         }
       })
