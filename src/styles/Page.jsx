@@ -47,9 +47,9 @@ export const RoundedBox = styled.div`
   background: white;
   width: 400px;
   max-width: 80%;
-  max-height: 60%;
+  max-height: 75%;
   border-radius: 15px;
-  margin-top: 40px;
+  margin-top: 20px;
   padding: 0px;
 `;
 

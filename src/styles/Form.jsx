@@ -36,6 +36,8 @@ export const TestFormTitle = styled.div`
 export const TestFormSubTitle = styled.div`
   float: left;
   margin: 0 0 10px 3px;
+  width: 80%;
+  text-align: center;
 `;
 
 export const InputBoxBound = styled.div`
