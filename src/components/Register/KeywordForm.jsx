@@ -36,12 +36,10 @@ export default function KeywordForm(props) {
   const registerKeywords = () => {
 
     // userKeywordList를 등록하는 api call
-
+    props.registerServey(userKeywordList);
     // 200인 경우
     // userKeywordList 초기화
     setUserKeywordList([]);
-    // 다음 페이지로 이동
-    props.moveNextPage();
   };
 
   function KeywordButton({ item }) {

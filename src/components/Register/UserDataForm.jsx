@@ -24,6 +24,10 @@ export default function UserDataForm(props) {
   const [email, setEmail] = useState("");
   const [emailValid, setEmailValid] = useState(0);
 
+  useEffect(()=>{
+    console.log(id);
+  }, [id]);
+
   // 아이디 중복 검사
   async function checkIdValid(value) {
     let targetValue = typeof value !== "string" ? toString(value) : value;
@@ -96,6 +100,8 @@ export default function UserDataForm(props) {
 
   // 등록 전 최종 점검 (빈 값 확인 및 이메일 유효성 확인)
   const checkRegister = () => {
+
+    console.log(id);
     
     let checkNickName, checkId, checkPassword, checkEmail;
 
