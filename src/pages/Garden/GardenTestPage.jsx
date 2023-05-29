@@ -8,11 +8,16 @@ import "../../styles/Common.css";
 import KeywordForm from "../../components/Register/KeywordForm";
 
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 import TesterDataForm from "../../components/Test/TesterDataForm";
 import TesterKeywordForm from "../../components/Test/TesterKeywordForm";
 
 export default function GardenTestPage(props) {
-  const userNickname = useParams().userId;
+  const location = useLocation();
+
+  const [userId, setUserId] = useState(location.state.userId);
+  const [userNickname, setUserNickname] = useState(location.state.userNickname);
 
   const [testPageCnt, setTestPageCnt] = useState(0);
 
