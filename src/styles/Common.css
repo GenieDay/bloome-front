@@ -21,3 +21,11 @@
   color: white;
   text-shadow: rgb(59, 160, 207) 1px 0 20px;
 }
+
+/* 콘텐트 서브 타이틀 텍스트 */
+.content-subtitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  text-shadow: rgb(59, 160, 207) 1px 0 10px;
+}

@@ -10,11 +10,32 @@ export const InputBound = styled.div`
   margin-bottom: 10px;
 `;
 
+
 export const InputTitle = styled.div`
   min-width: 20%;
   margin-top: 10px;
   margin-right: 10px;
   white-space: nowrap;
+`;
+
+export const TestFormBound = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+export const TestFormTitle = styled.div`
+  float: left;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 0 3px;
+`
+
+export const TestFormSubTitle = styled.div`
+  float: left;
+  margin: 0 0 10px 3px;
 `;
 
 export const InputBoxBound = styled.div`
