@@ -48,6 +48,13 @@ export default function TesterKeywordForm(props) {
     props.registerTesterForm(userKeywordList, userComment);
   };
 
+  // comment 글자 수 제한 확인
+  const checkUserComment = (e) => {
+    const { value, maxLength } = e.target;
+    let inputComment = value.slice(0, maxLength-1);
+    setUserComment(inputComment);
+  }
+
   return (
     <Page.RoundedBox style={{ height: "800px" }}>
       {/* <Form.TestFormBound> */}
@@ -62,7 +69,9 @@ export default function TesterKeywordForm(props) {
         ))}
       </Form.KeywordBound>
 
-      <Form.TestFormTitle style={{marginTop: "20px"}}>한 마디 남기기</Form.TestFormTitle>
+      <Form.TestFormTitle style={{ marginTop: "20px" }}>
+        한 마디 남기기
+      </Form.TestFormTitle>
       <Form.TestFormSubTitle>
         {props.userNickname}님은 어떤 사람인지, 혹은 {props.userNickname}님에게
         남기고 싶은 한 마디를 작성해주세요.
@@ -71,7 +80,9 @@ export default function TesterKeywordForm(props) {
         as="textarea"
         placeholder="해당 항목은 필수가 아닙니다."
         style={{ height: "60px", width: "80%" }}
-        onChange={(e) => setUserComment(e.target.value)}
+        onChange={(e) => checkUserComment(e)}
+        value={userComment}
+        maxLength={255}
       />
       {userKeywordList.length < 6 ? (
         <Form.DisabledSubmitButton disabled>
