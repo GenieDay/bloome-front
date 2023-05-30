@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 // api
 import { getGardenData } from "../../services/apis/garden";
-import { visitorReport } from "../../services/apis/report";
+import { visitorReport, ownerReport } from "../../services/apis/report";
 
 // images
 import whiteFlower0 from "../../assets/images/flowers/flower-white-0.png";
@@ -23,6 +23,7 @@ import whiteFlower6 from "../../assets/images/flowers/flower-white-6.png";
 
 //component
 import { Modal } from "react-bootstrap";
+import { Form as ReactForm } from "react-bootstrap";
 
 export default function GardenPage() {
   const [userId, setUserId] = useState(useParams().userId);
@@ -33,7 +34,14 @@ export default function GardenPage() {
   const [visitorReportShow, setVisitorReportShow] = useState(false);
   const [ownerReportShow, setOwnerReportShow] = useState(false);
   const [reportTesterName, setReportTesterName] = useState("");
-  const [visitorReportKeywordList, SetVisitorReportKeywordList] = useState([]);
+  const [visitorReportKeywordList, setVisitorReportKeywordList] = useState([]);
+  const [ownerReportKeywordList, setOwnerReportKeywordList] = useState({
+    open: [],
+    blind: [],
+    hidden: [],
+    unknown: [],
+  });
+  const [ownerReportComment, setOwnerReportComment] = useState("");
 
   useEffect(() => {
     getGardenData(userId)
@@ -88,7 +96,7 @@ export default function GardenPage() {
       visitorReport(flowerId)
         .then((response) => {
           if (response.status === 200) {
-            SetVisitorReportKeywordList(response.data.data.adjectiveSets);
+            setVisitorReportKeywordList(response.data.data.adjectiveSets);
             setReportTesterName(testerName);
             setVisitorReportShow(true);
           }
@@ -97,13 +105,25 @@ export default function GardenPage() {
           console.log(error);
         });
     } else {
-      setOwnerReportShow(true);
-      setReportTesterName(testerName);
+      ownerReport(flowerId)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response.data.data.window);
+            setOwnerReportKeywordList(response.data.data.window);
+            setOwnerReportComment(response.data.data.comment);
+            setReportTesterName(testerName);
+            setOwnerReportShow(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
   return (
     <React.Fragment>
+      {/* 방문자 리포트 */}
       <Modal
         size="sm"
         centered
@@ -118,7 +138,8 @@ export default function GardenPage() {
             fontSize: "1.1rem",
           }}
         >
-          {reportTesterName}님이 생각하는<br />
+          {reportTesterName}님이 생각하는
+          <br />
           {userNickname}님은 이런 사람이에요!
         </Modal.Header>
         <Modal.Body
@@ -133,13 +154,11 @@ export default function GardenPage() {
             {visitorReportKeywordList.map((item) => {
               if (item.isMatch === true) {
                 return (
-                  <Form.MatchKeywordButton>{item.word}</Form.MatchKeywordButton>
+                  <Form.MatchKeywordButton>{item}</Form.MatchKeywordButton>
                 );
               } else {
                 return (
-                  <Form.UnMatchKeywordButton>
-                    {item.word}
-                  </Form.UnMatchKeywordButton>
+                  <Form.UnMatchKeywordButton>{item}</Form.UnMatchKeywordButton>
                 );
               }
             })}
@@ -147,6 +166,133 @@ export default function GardenPage() {
           <Form.SubmitButton
             style={{ height: "30px" }}
             onClick={(e) => setVisitorReportShow(false)}
+          >
+            확인
+          </Form.SubmitButton>
+        </Modal.Body>
+      </Modal>
+
+      {/* 사용자 리포트 */}
+      <Modal
+        size="sm"
+        centered
+        show={ownerReportShow}
+        onHide={() => setOwnerReportShow(false)}
+      >
+        <Modal.Header
+          style={{
+            textAlign: "center",
+            margin: "0 auto",
+            fontWeight: "bold",
+            fontSize: "1.1rem",
+          }}
+        >
+          {reportTesterName}님이 생각하는
+          <br />
+          {userNickname}님은 이런 사람이에요!
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {ownerReportKeywordList.open.length !== 0 ? (
+            <Form.OwnerReportKeywordTitle>
+              우리 모두 아는 나
+            </Form.OwnerReportKeywordTitle>
+          ) : (
+            <></>
+          )}
+          <Form.OwnerReportKeywordBox>
+            {ownerReportKeywordList.open.map((item) => {
+              return (
+                <Form.OwnerOpenKeywordButton>
+                  {item}
+                </Form.OwnerOpenKeywordButton>
+              );
+            })}
+          </Form.OwnerReportKeywordBox>
+
+          {ownerReportKeywordList.blind.length !== 0 ? (
+            <Form.OwnerReportKeywordTitle>
+              {reportTesterName}님만 아는 나
+            </Form.OwnerReportKeywordTitle>
+          ) : (
+            <></>
+          )}
+          <Form.OwnerReportKeywordBox>
+            {ownerReportKeywordList.blind.map((item) => {
+              return (
+                <Form.OwnerBlindKeywordButton>
+                  {item}
+                </Form.OwnerBlindKeywordButton>
+              );
+            })}
+          </Form.OwnerReportKeywordBox>
+
+          {ownerReportKeywordList.hidden.length !== 0 ? (
+            <Form.OwnerReportKeywordTitle>
+              {userNickname}만 아는 나
+            </Form.OwnerReportKeywordTitle>
+          ) : (
+            <></>
+          )}
+          <Form.OwnerReportKeywordBox>
+            {ownerReportKeywordList.hidden.map((item) => {
+              return (
+                <Form.OwnerHiddenKeywordButton>
+                  {item}
+                </Form.OwnerHiddenKeywordButton>
+              );
+            })}
+          </Form.OwnerReportKeywordBox>
+
+          {ownerReportKeywordList.unknown.length !== 0 ? (
+            <Form.OwnerReportKeywordTitle>
+              내가 되고 싶은 나
+            </Form.OwnerReportKeywordTitle>
+          ) : (
+            <></>
+          )}
+          <Form.OwnerReportKeywordBox>
+            {ownerReportKeywordList.unknown.map((item) => {
+              return (
+                <Form.OwnerUnknownKeywordButton>
+                  {item}
+                </Form.OwnerUnknownKeywordButton>
+              );
+            })}
+          </Form.OwnerReportKeywordBox>
+          {ownerReportComment.length !== 0 ? (
+            <div
+              style={{
+                width: "90%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Form.OwnerReportKeywordTitle>
+                {reportTesterName}님이 전하는 한 마디
+              </Form.OwnerReportKeywordTitle>
+              <ReactForm.Control
+                type="text"
+                value={ownerReportComment}
+                readOnly
+                style={{ width: "90%", height: "50px" }}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+
+          <Form.SubmitButton
+            style={{ height: "30px", marginTop: "20px" }}
+            onClick={(e) => setOwnerReportShow(false)}
           >
             확인
           </Form.SubmitButton>

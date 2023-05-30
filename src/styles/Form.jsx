@@ -215,7 +215,7 @@ export const VisitorReportKeywordBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 250px;
+  width: 80%;
   height: 120px;
   padding: 0px;
   flex-wrap: wrap;
@@ -248,4 +248,84 @@ export const UnMatchKeywordButton = styled.div`
 
   background-color: #ffffff;
 
+`;
+
+export const OwnerReportKeywordBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 80%;
+  padding: 0px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+`;
+
+export const OwnerReportKeywordTitle = styled.div`
+  text-align: left;
+  font-size: 1.1rem;
+  // font-weight: bold;
+`;
+
+export const OwnerOpenKeywordButton = styled.div`
+  padding: 3.5px 10px 3.5px 10px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #4d9ad1;
+  height: 2rem;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #ffffff;
+
+  cursor: default;
+
+  background-color: #4d9ad1;
+`;
+
+export const OwnerBlindKeywordButton = styled.div`
+  padding: 3.5px 10px 3.5px 10px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #79bae8;
+  height: 2rem;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #ffffff;
+
+  cursor: default;
+
+  background-color: #79bae8;
+`;
+
+export const OwnerHiddenKeywordButton = styled.div`
+  padding: 3.5px 10px 3.5px 10px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #b3daf5;
+  height: 2rem;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #ffffff;
+
+  cursor: default;
+
+  background-color: #b3daf5;
+`;
+
+export const OwnerUnknownKeywordButton = styled.div`
+  padding: 3.5px 10px 3.5px 10px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #79bae8;
+  height: 2rem;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #000000;
+
+  cursor: default;
+
+  background-color: #ffffff;
 `;
