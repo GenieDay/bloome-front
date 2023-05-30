@@ -5,13 +5,15 @@ import * as Page from "../../styles/Page";
 import "../../styles/Common.css";
 
 // component
-import KeywordForm from "../../components/Register/KeywordForm";
-
-import { useParams } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-
 import TesterDataForm from "../../components/Test/TesterDataForm";
 import TesterKeywordForm from "../../components/Test/TesterKeywordForm";
+
+// route
+import { useLocation, useNavigate } from "react-router-dom";
+
+
+// api
+import { othersSurvey } from "../../services/apis/survey";
 
 export default function GardenTestPage(props) {
   const location = useLocation();
@@ -22,6 +24,8 @@ export default function GardenTestPage(props) {
   const [testPageCnt, setTestPageCnt] = useState(0);
 
   const [testerNickname, setTesterNickname] = useState("");
+
+  const navigate = useNavigate();
 
   function moveNextPage() {
     setTestPageCnt(testPageCnt + 1);
@@ -41,6 +45,16 @@ export default function GardenTestPage(props) {
     });
 
     // tester의 nickname, keywordList, Comment 등록 api call
+    othersSurvey(userId, testerNickname, testerKeywordIdList, testerComment)
+      .then((response) => {
+        if (response.status === 200) {
+          navigate("/garden/"+userId);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     console.log(testerNickname);
     console.log(testerKeywordIdList);
     console.log(testerComment);
