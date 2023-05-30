@@ -209,3 +209,43 @@ export const KeywordBound = styled.div`
   height: 55%;
   overflow: auto;
 `;
+
+export const VisitorReportKeywordBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 120px;
+  padding: 0px;
+  flex-wrap: wrap;
+`;
+
+export const MatchKeywordButton = styled.div`
+  padding: 5px 15px 5px 15px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #79bae8;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #ffffff;
+
+  cursor: default;
+
+  background-color: #79bae8;
+`;
+
+export const UnMatchKeywordButton = styled.div`
+  padding: 5px 15px 5px 15px;
+  margin: 3px;
+  border-radius: 20px;
+  border: 1px solid #79bae8;
+
+  font-size: 1rem;
+  white-space: nowrap;
+  color: #000000;
+
+  background-color: #ffffff;
+
+`;

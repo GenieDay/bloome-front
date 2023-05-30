@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 // api
 import { getGardenData } from "../../services/apis/garden";
+import { visitorReport } from "../../services/apis/report";
 
 // images
 import whiteFlower0 from "../../assets/images/flowers/flower-white-0.png";
@@ -20,11 +21,19 @@ import whiteFlower4 from "../../assets/images/flowers/flower-white-4.png";
 import whiteFlower5 from "../../assets/images/flowers/flower-white-5.png";
 import whiteFlower6 from "../../assets/images/flowers/flower-white-6.png";
 
+//component
+import { Modal } from "react-bootstrap";
+
 export default function GardenPage() {
   const [userId, setUserId] = useState(useParams().userId);
   const [userNickname, setUserNickname] = useState("");
   const [isOwner, setIsOwner] = useState(false);
   const [flowerList, setFlowerList] = useState([]);
+
+  const [visitorReportShow, setVisitorReportShow] = useState(false);
+  const [ownerReportShow, setOwnerReportShow] = useState(false);
+  const [reportTesterName, setReportTesterName] = useState("");
+  const [visitorReportKeywordList, SetVisitorReportKeywordList] = useState([]);
 
   useEffect(() => {
     getGardenData(userId)
@@ -34,7 +43,7 @@ export default function GardenPage() {
           setUserNickname(data.name);
           setIsOwner(data.owner);
           // 임시로 5개까지만 표시 제한
-          setFlowerList(data.flowers.slice(0,5));
+          setFlowerList(data.flowers.slice(0, 5));
         }
       })
       .catch((error) => {
@@ -53,11 +62,11 @@ export default function GardenPage() {
   ];
 
   const flowerPosition = [
-    { row: "left", "rowValue": 30, "bottomValue": 50 },
-    { row: "left", "rowValue": 100, "bottomValue": 80 },
-    { row: "left", "rowValue": 170, "bottomValue": 40 },
-    { row: "right", "rowValue": 100, "bottomValue": 80 },
-    { row: "right", "rowValue": 30, "bottomValue": 50 },
+    { row: "left", rowValue: 30, bottomValue: 50 },
+    { row: "left", rowValue: 100, bottomValue: 80 },
+    { row: "left", rowValue: 170, bottomValue: 40 },
+    { row: "right", rowValue: 100, bottomValue: 80 },
+    { row: "right", rowValue: 30, bottomValue: 50 },
   ];
 
   const navigate = useNavigate();
@@ -71,9 +80,79 @@ export default function GardenPage() {
     });
   };
 
+  const showFlowerDetails = (flowerId, testerName) => {
+    console.log(isOwner);
+    console.log(flowerId);
+    console.log("clicked");
+    if (isOwner === false) {
+      visitorReport(flowerId)
+        .then((response) => {
+          if (response.status === 200) {
+            SetVisitorReportKeywordList(response.data.data.adjectiveSets);
+            setReportTesterName(testerName);
+            setVisitorReportShow(true);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setOwnerReportShow(true);
+      setReportTesterName(testerName);
+    }
+  };
 
   return (
     <React.Fragment>
+      <Modal
+        size="sm"
+        centered
+        show={visitorReportShow}
+        onHide={() => setVisitorReportShow(false)}
+      >
+        <Modal.Header
+          style={{
+            textAlign: "center",
+            margin: "0 auto",
+            fontWeight: "bold",
+            fontSize: "1.1rem",
+          }}
+        >
+          {reportTesterName}님이 생각하는<br />
+          {userNickname}님은 이런 사람이에요!
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Form.VisitorReportKeywordBox>
+            {visitorReportKeywordList.map((item) => {
+              if (item.isMatch === true) {
+                return (
+                  <Form.MatchKeywordButton>{item.word}</Form.MatchKeywordButton>
+                );
+              } else {
+                return (
+                  <Form.UnMatchKeywordButton>
+                    {item.word}
+                  </Form.UnMatchKeywordButton>
+                );
+              }
+            })}
+          </Form.VisitorReportKeywordBox>
+          <Form.SubmitButton
+            style={{ height: "30px" }}
+            onClick={(e) => setVisitorReportShow(false)}
+          >
+            확인
+          </Form.SubmitButton>
+        </Modal.Body>
+      </Modal>
+
       <Page.Background>
         {/* 타이틀 */}
         <div
@@ -109,7 +188,7 @@ export default function GardenPage() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent:"center",
+                    justifyContent: "center",
                   }}
                 >
                   <div className="flower-tester-name">{item.testerName}</div>
@@ -117,8 +196,12 @@ export default function GardenPage() {
                     src={flowerImageList[item.leaves]}
                     style={{
                       height: "180px",
-                      width: "auto"
+                      width: "auto",
+                      cursor: "pointer",
                     }}
+                    onClick={(e) =>
+                      showFlowerDetails(item.flowerId, item.testerName)
+                    }
                   ></img>
                 </div>
               );
@@ -141,57 +224,16 @@ export default function GardenPage() {
                     style={{
                       height: "180px",
                       width: "auto",
+                      cursor: "pointer",
                     }}
+                    onClick={(e) =>
+                      showFlowerDetails(item.flowerId, item.testerName)
+                    }
                   ></img>
                 </div>
               );
             }
-            })}
-          {/* <img
-            src={flowerImageList[3]}
-            style={{
-              height: "180px",
-              position: "absolute",
-              left: "30px",
-              bottom: "50px",
-            }}
-          ></img>
-          <img
-            src={flowerImageList[0]}
-            style={{
-              height: "180px",
-              position: "absolute",
-              left: "100px",
-              bottom: "80px",
-            }}
-          ></img>
-          <img
-            src={flowerImageList[5]}
-            style={{
-              height: "180px",
-              position: "absolute",
-              left: "170px",
-              bottom: "40px",
-            }}
-          ></img>
-          <img
-            src={flowerImageList[4]}
-            style={{
-              height: "180px",
-              position: "absolute",
-              right: "100px",
-              bottom: "80px",
-            }}
-          ></img>
-          <img
-            src={flowerImageList[1]}
-            style={{
-              height: "180px",
-              position: "absolute",
-              right: "30px",
-              bottom: "50px",
-            }}
-          ></img> */}
+          })}
         </div>
         {/* 꽃 심기 버튼 */}
         {isOwner === false ? (
