@@ -29,3 +29,11 @@
   color: white;
   text-shadow: rgb(59, 160, 207) 1px 0 10px;
 }
+
+/* 콘텐트 서브 타이틀 텍스트 */
+.flower-tester-name {
+  font-size: 20px;
+  color: white;
+  text-shadow: rgb(59, 160, 207) 1px 0 10px;
+  margin-bottom: 10px;
+}
