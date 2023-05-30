@@ -1,16 +1,19 @@
 import axios from "axios";
 
-const NonTokenInterceptor = axios.create({
+const TokenInterceptor = axios.create({
   baseURL: process.env.REACT_APP_BASEURL,
   timeout: 15000,
 });
 
 // request interceptors
-NonTokenInterceptor.interceptors.request.use(
+TokenInterceptor.interceptors.request.use(
   function (config) {
-    if (JSON.parse(localStorage.getItem("userInfo")).accessToken) {
+    if (localStorage.getItem("userInfo")) {
       config.headers.Authorization =
-        "Bearer" + JSON.parse(localStorage.getItem("userInfo")).accessToken;
+        "Bearer " + JSON.parse(localStorage.getItem("userInfo")).accessToken;
+    } 
+    else {
+      config.headers.Authorization ="Bearer 0.0.0";
     }
     return config;
   },
@@ -19,7 +22,7 @@ NonTokenInterceptor.interceptors.request.use(
   }
 );
 
-NonTokenInterceptor.interceptors.response.use(
+TokenInterceptor.interceptors.response.use(
   function (response) {
     return response;
   },
@@ -27,9 +30,8 @@ NonTokenInterceptor.interceptors.response.use(
     const status = error.response.status;
 
     switch (status) {
-
       case 401: {
-        window.location.href = '/';
+        window.location.href = "/";
         return Promise.reject(error.message);
       }
 
@@ -38,11 +40,11 @@ NonTokenInterceptor.interceptors.response.use(
         return Promise.reject(error.message);
       }
 
-      default : {
+      default: {
         return Promise.reject(error);
       }
     }
   }
 );
 
-export default NonTokenInterceptor;
+export default TokenInterceptor;
