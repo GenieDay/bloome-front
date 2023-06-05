@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useAsyncValue, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 // css
 import * as Page from "../../styles/Page";
@@ -24,6 +24,7 @@ import whiteFlower6 from "../../assets/images/flowers/flower-white-6.png";
 //component
 import { Modal } from "react-bootstrap";
 import { Form as ReactForm } from "react-bootstrap";
+import { FaShareAlt } from "react-icons/fa";
 
 export default function GardenPage() {
   const [userId, setUserId] = useState(useParams().userId);
@@ -121,6 +122,15 @@ export default function GardenPage() {
     }
   };
 
+  const handleCopyClipBoard = () => {
+    try {
+      navigator.clipboard.writeText(window.location.href);
+      alert("정원 주소가 클립보드에 복사되었습니다.");
+    } catch (error) {
+      alert("클립보드 복사에 실패하였습니다.");
+    }
+  };
+
   return (
     <React.Fragment>
       {/* 방문자 리포트 */}
@@ -154,11 +164,13 @@ export default function GardenPage() {
             {visitorReportKeywordList.map((item) => {
               if (item.isMatch === true) {
                 return (
-                  <Form.MatchKeywordButton>{item}</Form.MatchKeywordButton>
+                  <Form.MatchKeywordButton>{item.word}</Form.MatchKeywordButton>
                 );
               } else {
                 return (
-                  <Form.UnMatchKeywordButton>{item}</Form.UnMatchKeywordButton>
+                  <Form.UnMatchKeywordButton>
+                    {item.word}
+                  </Form.UnMatchKeywordButton>
                 );
               }
             })}
@@ -314,6 +326,13 @@ export default function GardenPage() {
           <div className={"content-subtitle"}>
             {flowerList.length}개의 꽃이 피었습니다!
           </div>
+          {isOwner === true ? (
+            <Form.SubmitButton onClick={() => handleCopyClipBoard()}>
+              <FaShareAlt style={{ color: "#fff" }} /> 내 정원 공유하기
+            </Form.SubmitButton>
+          ) : (
+            <></>
+          )}
         </div>
         <div
           style={{
