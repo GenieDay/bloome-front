@@ -29,6 +29,9 @@ import {
   IoIosArrowDropleftCircle,
   IoIosArrowDroprightCircle,
 } from "react-icons/io";
+import { CgMenu } from "react-icons/cg";
+
+import { deleteUserInfo } from "../../reducer/user";
 
 export default function GardenPage() {
   const [userId, setUserId] = useState(useParams().userId);
@@ -49,6 +52,7 @@ export default function GardenPage() {
     unknown: [],
   });
   const [ownerReportComment, setOwnerReportComment] = useState("");
+  const [menuModalShow, setMenuModalShow] = useState(false);
 
   useEffect(() => {
     getGardenData(userId)
@@ -67,7 +71,9 @@ export default function GardenPage() {
 
   // 페이지에 따른 꽃 표시
   useEffect(() => {
-    setShowFlowerList(totalFlowerList.slice(showFlowerStartIdx, showFlowerStartIdx+5));
+    setShowFlowerList(
+      totalFlowerList.slice(showFlowerStartIdx, showFlowerStartIdx + 5)
+    );
   }, [totalFlowerList, showFlowerStartIdx]);
 
   const flowerImageList = [
@@ -151,8 +157,73 @@ export default function GardenPage() {
     }
   };
 
+  // 메인 화면으로
+  const goHome = () => {
+    setMenuModalShow(false);
+    navigate("/");
+  };
+
+  // 로그아웃
+  const logOut = () => {
+    setMenuModalShow(false);
+    deleteUserInfo();
+    window.location.reload();
+  };
+
+  // 로그인
+  const logIn = () => {
+    navigate("/login");
+  };
+
   return (
     <React.Fragment>
+      {/* 메뉴 Modal */}
+      <Modal
+        size="sm"
+        centered
+        show={menuModalShow}
+        onHide={() => setMenuModalShow(false)}
+      >
+        <Modal.Body
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p
+            style={{
+              textAlign: "center",
+              fontWeight: "bold",
+              fontSize: "1.2rem",
+            }}
+          >
+            MENU
+          </p>
+          <Form.DisabledKeywordButton
+            style={{ width: "80%" }}
+            onClick={() => goHome()}
+          >
+            홈 화면으로 가기
+          </Form.DisabledKeywordButton>
+          {isOwner === true ? (
+            <Form.DisabledKeywordButton
+              style={{ width: "80%" }}
+              onClick={() => logOut()}
+            >
+              로그아웃
+            </Form.DisabledKeywordButton>
+          ) : (
+            <Form.DisabledKeywordButton
+              style={{ width: "80%" }}
+              onClick={() => logIn()}
+            >
+              내 정원 입장하기
+            </Form.DisabledKeywordButton>
+          )}
+        </Modal.Body>
+      </Modal>
       {/* 방문자 리포트 */}
       <Modal
         size="sm"
@@ -453,6 +524,24 @@ export default function GardenPage() {
             style={{ color: "white", cursor: "pointer" }}
             onClick={() => moveNextPage()}
           ></IoIosArrowDroprightCircle>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            width: "600px",
+            maxWidth: "90%",
+            height: "100px",
+            top: "3%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          <CgMenu
+            size="40"
+            style={{ color: "white", cursor: "pointer" }}
+            onClick={() => setMenuModalShow(true)}
+          ></CgMenu>
         </div>
       </Page.Background>
     </React.Fragment>
