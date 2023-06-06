@@ -25,12 +25,18 @@ import whiteFlower6 from "../../assets/images/flowers/flower-white-6.png";
 import { Modal } from "react-bootstrap";
 import { Form as ReactForm } from "react-bootstrap";
 import { FaShareAlt } from "react-icons/fa";
+import {
+  IoIosArrowDropleftCircle,
+  IoIosArrowDroprightCircle,
+} from "react-icons/io";
 
 export default function GardenPage() {
   const [userId, setUserId] = useState(useParams().userId);
   const [userNickname, setUserNickname] = useState("");
   const [isOwner, setIsOwner] = useState(false);
-  const [flowerList, setFlowerList] = useState([]);
+  const [totalFlowerList, setTotalFlowerList] = useState([]);
+  const [showFlowerStartIdx, setShowFlowerStartIdx] = useState(0);
+  const [showFlowerList, setShowFlowerList] = useState([]);
 
   const [visitorReportShow, setVisitorReportShow] = useState(false);
   const [ownerReportShow, setOwnerReportShow] = useState(false);
@@ -51,14 +57,18 @@ export default function GardenPage() {
           const data = response.data.data;
           setUserNickname(data.name);
           setIsOwner(data.owner);
-          // 임시로 5개까지만 표시 제한
-          setFlowerList(data.flowers.slice(0, 5));
+          setTotalFlowerList(data.flowers);
         }
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  // 페이지에 따른 꽃 표시
+  useEffect(() => {
+    setShowFlowerList(totalFlowerList.slice(showFlowerStartIdx, showFlowerStartIdx+5));
+  }, [totalFlowerList, showFlowerStartIdx]);
 
   const flowerImageList = [
     whiteFlower0,
@@ -90,9 +100,6 @@ export default function GardenPage() {
   };
 
   const showFlowerDetails = (flowerId, testerName) => {
-    console.log(isOwner);
-    console.log(flowerId);
-    console.log("clicked");
     if (isOwner === false) {
       visitorReport(flowerId)
         .then((response) => {
@@ -109,7 +116,6 @@ export default function GardenPage() {
       ownerReport(flowerId)
         .then((response) => {
           if (response.status === 200) {
-            console.log(response.data.data.window);
             setOwnerReportKeywordList(response.data.data.window);
             setOwnerReportComment(response.data.data.comment);
             setReportTesterName(testerName);
@@ -128,6 +134,20 @@ export default function GardenPage() {
       alert("정원 주소가 클립보드에 복사되었습니다.");
     } catch (error) {
       alert("클립보드 복사에 실패하였습니다.");
+    }
+  };
+
+  // 이전 페이지로 이동
+  const moveNextPage = () => {
+    if (showFlowerStartIdx + 5 < totalFlowerList.length) {
+      setShowFlowerStartIdx(showFlowerStartIdx + 5);
+    }
+  };
+
+  // 다음 페이지로 이동
+  const movePrevPage = () => {
+    if (showFlowerStartIdx - 5 >= 0) {
+      setShowFlowerStartIdx(showFlowerStartIdx - 5);
     }
   };
 
@@ -324,7 +344,7 @@ export default function GardenPage() {
         >
           <div className={"content-title"}>{userNickname}님의 정원</div>
           <div className={"content-subtitle"}>
-            {flowerList.length}개의 꽃이 피었습니다!
+            {totalFlowerList.length}개의 꽃이 피었습니다!
           </div>
           {isOwner === true ? (
             <Form.SubmitButton onClick={() => handleCopyClipBoard()}>
@@ -342,7 +362,7 @@ export default function GardenPage() {
             height: "100px",
           }}
         >
-          {flowerList.map((item, idx) => {
+          {showFlowerList.map((item, idx) => {
             if (idx <= 2) {
               return (
                 <div
@@ -411,6 +431,29 @@ export default function GardenPage() {
         ) : (
           <></>
         )}
+        <div
+          style={{
+            position: "relative",
+            width: "600px",
+            maxWidth: "90%",
+            height: "10px",
+            bottom: "18%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <IoIosArrowDropleftCircle
+            size="50"
+            style={{ color: "white", cursor: "pointer" }}
+            onClick={() => movePrevPage()}
+          ></IoIosArrowDropleftCircle>
+          <IoIosArrowDroprightCircle
+            size="50"
+            style={{ color: "white", cursor: "pointer" }}
+            onClick={() => moveNextPage()}
+          ></IoIosArrowDroprightCircle>
+        </div>
       </Page.Background>
     </React.Fragment>
   );
