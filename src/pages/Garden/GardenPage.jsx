@@ -278,8 +278,29 @@ export default function GardenPage() {
               }
             })}
           </Form.VisitorReportKeywordBox>
+          <p
+            style={{
+              margin: "10px 0 0 0",
+              width: "90%",
+              fontSize: "0.8rem",
+              textAlign: "center",
+            }}
+          >
+            파란색은 '서로 일치하는' 키워드를,
+          </p>
+          <p
+            style={{
+              margin: "0 0 10px 0",
+              width: "90%",
+              fontSize: "0.8rem",
+              textAlign: "center",
+            }}
+          >
+            흰색은 '{reportTesterName}님만 선택한' 키워드를 나타냅니다.
+          </p>
+
           <Form.SubmitButton
-            style={{ height: "30px" }}
+            style={{ height: "30px", marginTop: "10px" }}
             onClick={(e) => setVisitorReportShow(false)}
           >
             확인
