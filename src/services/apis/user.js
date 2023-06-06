@@ -33,3 +33,13 @@ export function join(name, idName, password, email) {
     },
   });
 }
+
+export function findPw(id) {
+  return Interceptor({
+    url:"",
+    method: "get",
+    data: {
+      id: id,
+    },
+  })
+}

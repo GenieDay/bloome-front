@@ -5,6 +5,7 @@ export const InputBound = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   width: 80%;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -13,9 +14,10 @@ export const InputBound = styled.div`
 
 export const InputTitle = styled.div`
   min-width: 20%;
-  margin-top: 10px;
-  margin-right: 10px;
   white-space: nowrap;
+  display : flex;
+	align-items : center;
+  text-align: left;
 `;
 
 export const TestFormBound = styled.div`
