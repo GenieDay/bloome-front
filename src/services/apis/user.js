@@ -43,3 +43,15 @@ export function findPw(id) {
     },
   })
 }
+ 
+export function changePw(id, originPw, newPw) {
+return Interceptor({
+  url: "",
+  method: "pose",
+  data: {
+    id: id,
+    originPw: originPw,
+    newPw: newPw,
+  },
+});
+}

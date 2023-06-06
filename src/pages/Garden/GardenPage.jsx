@@ -175,6 +175,10 @@ export default function GardenPage() {
     navigate("/login");
   };
 
+  const toPasswordManagePage = () => {
+    navigate("/manage-password/"+userId);
+  };
+
   return (
     <React.Fragment>
       {/* 메뉴 Modal */}
@@ -208,12 +212,20 @@ export default function GardenPage() {
             홈 화면으로 가기
           </Form.DisabledKeywordButton>
           {isOwner === true ? (
-            <Form.DisabledKeywordButton
-              style={{ width: "80%" }}
-              onClick={() => logOut()}
-            >
-              로그아웃
-            </Form.DisabledKeywordButton>
+            <>
+              <Form.DisabledKeywordButton
+                style={{ width: "80%" }}
+                onClick={() => toPasswordManagePage()}
+              >
+                비밀번호 변경하기
+              </Form.DisabledKeywordButton>
+              <Form.DisabledKeywordButton
+                style={{ width: "80%" }}
+                onClick={() => logOut()}
+              >
+                로그아웃
+              </Form.DisabledKeywordButton>
+            </>
           ) : (
             <Form.DisabledKeywordButton
               style={{ width: "80%" }}
