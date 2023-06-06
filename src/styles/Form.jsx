@@ -5,7 +5,7 @@ export const InputBound = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 80%;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -13,11 +13,12 @@ export const InputBound = styled.div`
 
 
 export const InputTitle = styled.div`
-  min-width: 20%;
+  min-width: 25%;
   white-space: nowrap;
   display : flex;
 	align-items : center;
   text-align: left;
+  padding-top: 5px;
 `;
 
 export const TestFormBound = styled.div`
@@ -57,6 +58,7 @@ export const InputBox = styled.input`
   color: #333333;
   height: 30px;
   padding-left: 10px;
+  width: 100%;
 `;
 
 export const EmailInputBox = styled.input`

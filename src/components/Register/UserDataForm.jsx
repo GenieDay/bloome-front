@@ -147,7 +147,7 @@ export default function UserDataForm(props) {
   };
 
   return (
-    <Page.RoundedBox style={{ height: "400px" }}>
+    <Page.RoundedBox style={{ height: "450px" }}>
       <Form.InputBound>
         <Form.InputTitle>
           닉네임<span style={{ color: "red" }}>*</span>
