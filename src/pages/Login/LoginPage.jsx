@@ -129,9 +129,14 @@ export default function LoginPage() {
             alignItems: "center",
           }}
         >
-          <p style={{ margin: 0 }}>회원님의 아이디를 입력해주세요.</p>
-          <p style={{ margin: 0 }}>
-            회원가입 시 입력한 이메일로 임시 비밀번호를 발송해드립니다.
+          <p style={{ margin: 0, textAlign: "center" }}>
+            회원님의 아이디를 입력해주세요.
+          </p>
+          <p style={{ margin: 0, textAlign: "center" }}>
+            회원가입 시 입력한 이메일로
+          </p>
+          <p style={{ margin: 0, textAlign: "center" }}>
+            임시 비밀번호를 발송해드립니다.
           </p>
           <Form.InputBound style={{ width: "80%" }}>
             <Form.InputTitle>아이디</Form.InputTitle>
@@ -169,7 +174,10 @@ export default function LoginPage() {
               ></Form.InputBox>
             </Form.InputBound>
 
-            <Form.SubmitButton style={{marginTop: "10px"}} onClick={() => userLogin()}>
+            <Form.SubmitButton
+              style={{ marginTop: "10px" }}
+              onClick={() => userLogin()}
+            >
               내 정원 입장하기
             </Form.SubmitButton>
             <p
