@@ -34,24 +34,24 @@ export function join(name, idName, password, email) {
   });
 }
 
-export function findPw(id) {
+export function findPw(idName) {
   return Interceptor({
-    url:"",
-    method: "get",
+    url:"api/v1/user/find-pw",
+    method: "post",
     data: {
-      id: id,
+      idName: idName,
     },
   })
 }
  
-export function changePw(id, originPw, newPw) {
+export function changePw(idName, oldPassword, newPassword) {
 return Interceptor({
-  url: "",
-  method: "pose",
+  url: "api/v1/user/change-pw",
+  method: "post",
   data: {
-    id: id,
-    originPw: originPw,
-    newPw: newPw,
+    idName: idName,
+    oldPassword: oldPassword,
+    newPassword: newPassword,
   },
 });
 }

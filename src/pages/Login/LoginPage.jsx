@@ -59,41 +59,43 @@ export default function LoginPage() {
     findPw(idForFindPw)
       .then((response) => {
         if (response.status === 200) {
-          userInfo(response.data.data);
+          console.log(response.data);
           mailData.user_email = response.data.data.email;
           mailData.message = response.data.data.password;
+
+          // 이메일 전송
+          emailjs
+            .send(
+              process.env.REACT_APP_EMAIL_ID,
+              process.env.REACT_APP_EMAIL_TEMPLATE,
+              mailData,
+              process.env.REACT_APP_EMAIL_PRIVATEKEY
+            )
+            .then(
+              (result) => {
+                console.log(result.text);
+                setFindPwModalShow(false);
+                alert("회원님의 이메일로 임시 비밀번호가 발송되었습니다.");
+                setIdForFindPw("");
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
         }
       })
       .catch((error) => {
         setFindPwModalShow(false);
-        if (error.status === "401") {
-          alert("존재하지 않는 id 입니다. 다시 시도해주세요.");
+        if (error.status === "404") {
+          alert("사용자를 찾을 수 없습니다. 다시 시도해주세요.");
         } else {
           alert("오류 발생. 다시 시도해주세요.");
         }
         setIdForFindPw("");
         return;
       });
+      console.log(mailData);
 
-    // 이메일 전송
-    emailjs
-      .send(
-        process.env.REACT_APP_EMAIL_ID,
-        process.env.REACT_APP_EMAIL_TEMPLATE,
-        mailData,
-        process.env.REACT_APP_EMAIL_PRIVATEKEY
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          setFindPwModalShow(false);
-          alert("회원님의 이메일로 임시 비밀번호가 발송되었습니다.");
-          setIdForFindPw("");
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
   };
 
   return (
