@@ -134,12 +134,36 @@ export default function GardenPage() {
     }
   };
 
-  const handleCopyClipBoard = () => {
+  const unsecuredCopyToClipboard = (text) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
     try {
+      document.execCommand("copy");
+      alert("정원 주소가 클립보드에 복사되었습니다.");
+    } catch (err) {
+      console.error("Unable to copy to clipboard", err);
+      alert("클립보드 복사에 실패하였습니다.");
+    }
+    document.body.removeChild(textArea);
+  }
+
+  const handleCopyClipBoard = () => {
+    // try {
+    //   console.log()
+    //   navigator.clipboard.writeText(window.location.href);
+    //   alert("정원 주소가 클립보드에 복사되었습니다.");
+    // } catch (error) {
+    //   alert("클립보드 복사에 실패하였습니다.");
+    // }
+
+    if(window.isSecureContext && navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href);
       alert("정원 주소가 클립보드에 복사되었습니다.");
-    } catch (error) {
-      alert("클립보드 복사에 실패하였습니다.");
+    } else {
+      unsecuredCopyToClipboard(window.location.href);
     }
   };
 
