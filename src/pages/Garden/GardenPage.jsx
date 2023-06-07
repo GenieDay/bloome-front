@@ -485,9 +485,9 @@ export default function GardenPage() {
         <div
           style={{
             position: "relative",
-            top: "20%",
+            top: "27%",
             width: "400px",
-            height: "100px",
+            height: "0px",
           }}
         >
           {showFlowerList.map((item, idx) => {
